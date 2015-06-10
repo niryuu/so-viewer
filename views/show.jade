@@ -1,0 +1,17 @@
+each item in sorted
+  case item.type
+    when 'question'
+      h4= 'question: ' + item.row.owner_user_id
+      p= item.row.title
+      p= item.row.body
+    when 'answer'
+      h4= 'answer: ' + item.row.owner_user_id
+      p= item.row.title
+      != item.row.body
+    when 'comment'
+      h4= 'comment: ' + item.row.user_id
+      p= item.row.text
+    when 'post_history'
+      h4= 'history: ' + item.row.user_id + ' type: ' + item.row.post_history_type_id
+      p= item.row.text
+      p= item.row.comment
