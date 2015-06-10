@@ -1,13 +1,14 @@
+a(href='http://stackoverflow.com/questions/' + post_id) view on Stack Overflow
 each item in sorted
   case item.type
     when 'question'
       h4= 'question: ' + item.row.owner_user_id
       p= item.row.title
-      p= item.row.body
+      != htmlDecode(item.row.body)
     when 'answer'
       h4= 'answer: ' + item.row.owner_user_id
       p= item.row.title
-      != item.row.body
+      != htmlDecode(item.row.body)
     when 'comment'
       h4= 'comment: ' + item.row.user_id
       p= item.row.text

@@ -18,6 +18,14 @@ var wrap = function(rows, type) {
   return array;
 };
 
+var htmlDecode = function(input) {
+    var ret = input.replace(/&gt;/g, '>');
+    ret = ret.replace(/&lt;/g, '<');
+    ret = ret.replace(/&quot;/g, '"');
+    ret = ret.replace(/&apos;/g, "'");
+    ret = ret.replace(/&amp;/g, '&');
+    return ret;
+};
 var app = koa();
 
 app.use(require('koa-static')('static'));
@@ -36,7 +44,7 @@ app.get('/show/:post_id', function *(next) {
   var sorted = [];
   sorted = sorted.concat(wrap(question.rows, 'question'), wrap(answers.rows, 'answer'), wrap(post_histories.rows, 'post_history'), wrap(comments.rows, 'comment'))
   sorted.sort(function(a, b) {return new Date(a.row.creation_date) - new Date(b.row.creation_date) >= 0 ? 1 : -1;});
-  yield this.render('show', {sorted: sorted});
+  yield this.render('show', {post_id: this.params.post_id, sorted: sorted, htmlDecode: htmlDecode});
 });
 
 app.listen(3000);
